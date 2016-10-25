@@ -1,0 +1,24 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+ 
+.user-info {
+ margin-top: 5px;
+ margin-right: 5px;
+ display: inline-block;
+}
+ 
+.nav {
+ margin-top: 5px;
+}
+
+.edit-page .edit-account-link {
+ display: none;
+}
+
+.signed-in .profile-link {
+ visibility:hidden;
+}
+
+.edit-page .profile-link {
+ visibility: visible;
+}
