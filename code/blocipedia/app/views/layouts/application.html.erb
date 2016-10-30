@@ -11,6 +11,12 @@
   <div class="container">
     <ul class="nav nav-tabs">
       <% if user_signed_in? %>
+      <% unless current_page?(root_path) %>
+        <li><%= link_to "Blocipedia", root_path %></li>
+      <% end %>
+      <% unless current_page?(wikis_path) %>
+        <li><%= link_to "Wikis", wikis_path %></li>
+      <% end %>
       <li><%= link_to 'Edit account', edit_user_registration_path, :class => 'edit-account-link' %></li>
       <% end %>
       <div class="pull-right user-info">
