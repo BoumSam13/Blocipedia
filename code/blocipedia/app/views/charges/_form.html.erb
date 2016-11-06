@@ -1,0 +1,17 @@
+<% if current_user.role == "standard" %>
+<h4>Upgrade to Premium Membership</h4>
+    <ul>
+        <li>Create private wikis.</li>
+        <li>Add and remove collaborators to your private wikis.</li>
+        <li>The one-time cost to sign up is 15 dollars.</li>
+    </ul>
+    <br/>
+<% end %>
+
+<% if current_user.role == "premium" %>
+    <h4>Downgrade to Standard Membership</h4>
+    <p>
+        If you downgrade, you will no longer be able to create private wikis and add/remove collaborators to them.
+    </p>
+    <br/>
+<% end %>

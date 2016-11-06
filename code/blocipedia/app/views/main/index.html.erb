@@ -2,8 +2,10 @@
 <div class="jumbotron">
     <h1>Blocipedia</h1>
     <p>Blocipedia allows you to create your own wikis and share them with others.</p>
-    <p><%= link_to "Sign In", new_user_registration_path %> or
-    <%= link_to "Sign Up", new_user_session_path, class: 'btn btn-primary' %> today!</p>
+    <% if !user_signed_in? %>
+        <p><%= link_to "Sign In", new_user_registration_path %> or
+        <%= link_to "Sign Up", new_user_session_path, class: 'btn btn-primary' %> today!</p>
+    <% end %>
 </div>
 <div class="row">
     <div class="col-md-4">
@@ -12,8 +14,15 @@
     </div>
     <div class="col-md-5">
         <h2>Private Wikis</h2>
-         <p>Create private wikis when signed up as a premium member.</p>
-         <p>Add and remove collaborators to your private wikis.</p>
+            <p>Create private wikis when signed up as a premium member.</p>
+            <p>Add and remove collaborators to your private wikis.</p>
+            <% if user_signed_in? %>
+                <% if current_user.role != "admin" %>
+                    <%= link_to "Upgrade", charges_new_path, class: 'btn btn-primary' %>
+                <% end %>
+            <% else %>
+                <%= link_to "Upgrade", new_user_session_path, class: 'btn btn-primary' %>
+            <% end %>
     </div>
     <div class="col-md-3">
         <h2>Markdown Support</h2>
