@@ -49,6 +49,11 @@ class ChargesController < ApplicationController
     current_user.update_attributes(role: 'standard')
     flash[:notice] = "You've been downgraded to standard membership."
     redirect_to root_path
+    
+    @user_wikis = current_user.wikis.where(private: true)
+    @user_wikis.each do |p|
+      p.update_attributes(private: false)
+    end
   end
   
   private

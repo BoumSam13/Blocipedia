@@ -1,10 +1,24 @@
 class WikisController < ApplicationController
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def show
     @wiki = Wiki.find(params[:id]);
+    
+    role = current_user.role
+    case role
+      when "standard"
+        if @wiki.private
+          flash[:alert] = "You are not authorized to see this private wiki since you are signed up with a standard membership!"
+          redirect_to root_path
+        end
+      when "premium"
+        if @wiki.private && @wiki.user != current_user
+          flash[:alert] = "You are not authorized to see this private wiki since you did not create it!"
+          redirect_to root_path
+        end
+    end
   end
 
   def new
@@ -14,6 +28,10 @@ class WikisController < ApplicationController
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+    
+    if current_user.standard?
+      @wiki.update_attribute(:private, false)
+    end
     
     if @wiki.save
       flash[:notice] = "Wiki was saved successfully."
@@ -26,6 +44,20 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    
+    role = current_user.role
+    case role
+      when "standard"
+        if @wiki.private
+          flash[:alert] = "You are not authorized to edit this private wiki since you are signed up with a standard membership!"
+          redirect_to root_path
+        end
+      when "premium"
+        if @wiki.private && @wiki.user != current_user
+          flash[:alert] = "You are not authorized to edit this private wiki since you did not create it!"
+          redirect_to root_path
+        end
+    end
   end
   
   def update
@@ -56,6 +88,6 @@ class WikisController < ApplicationController
   private
   
   def wiki_params
-    params.require(:wiki).permit(:title, :body)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 end
