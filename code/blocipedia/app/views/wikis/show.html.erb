@@ -1,12 +1,16 @@
-<h1><%= @wiki.title %> <br>
-    <small>
-        submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.name %>
-    </small>
+<h1><%= markdown_to_html(@wiki.title) %>
+    <p>
+        <small>
+            submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.name %>
+        </small>
+    </p>
 </h1>
+
+<br/>
  
 <div class="row">
     <div class="col-md-8">
-        <p><%= @wiki.body %></p>
+        <p><%= markdown_to_html(@wiki.body) %></p>
     </div>
     <div class="col-md-4">
         <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
@@ -15,3 +19,5 @@
         <% end %>
     </div>
 </div>
+
+

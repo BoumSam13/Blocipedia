@@ -9,7 +9,17 @@
         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
     </div>
     
-    <% if current_user.admin? || current_user.premium? %>
+    <% if current_page?(new_wiki_path) %>
+        <% if current_user.admin? || current_user.premium? %>
+            <% page = "new" %>
+        <% end %>
+    <% elsif current_page?(edit_wiki_path) %>
+        <% if current_user.admin? || (current_user.premium? && @wiki.user == current_user) %>
+            <% page = "edit" %>
+        <% end %>
+    <% end %>
+    
+    <% if page == "new" || page == "edit" %>
         <div class="form-group" style="margin-left:20px">
             <%= f.label :private, class: 'checkbox' do %>
                 <%= f.check_box :private, {}, "true", "false" %> Private wiki
@@ -20,4 +30,5 @@
     <div class="form-group">
         <%= f.submit "Save", class: 'btn btn-success' %>
     </div>
+
 <% end %>

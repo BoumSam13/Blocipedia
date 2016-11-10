@@ -4,7 +4,7 @@
     <div class="col-md-8">
         <% @wikis.each do |wiki| %>
             <h4 class="media-heading">
-                <%= link_to wiki.title, wiki %>
+                <%= link_to markdown_to_html(wiki.title), wiki %>
             </h4>
             <br/>
         <% end %>
