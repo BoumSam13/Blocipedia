@@ -1,0 +1,38 @@
+<%= form_for [@wiki, Collaborator.new()] do |f| %>
+
+<div class="row">
+    <div class="col-md-7">
+        <h3>Collaborators</h3>
+    </div>
+    
+    <div class="col-md-5">
+        <h3>Add a Collaborator</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7">
+        <table class="table table-bordered">
+            <thead> 
+                <tr>
+                    <th class="col-xs-1">Remove?</th>
+                    <th class="col-xs-6">Collaborator</th>
+                </tr>
+            </thead> 
+                <%= render @wiki.collaborators %>
+        </table>
+    </div>
+
+    <div class="col-md-5">
+        <%= form_for [@wiki, Collaborator.new()] do |f| %>
+            <h4>
+                <%= f.collection_select :user_id, @wiki.all_users, :id, :name, :prompt => true %>
+            </h4>
+
+            <div class="form-group">
+                <%= f.submit "Save", class: "btn btn-success" %>
+            </div>
+        <% end %>
+    </div>
+</div>
+<% end %>

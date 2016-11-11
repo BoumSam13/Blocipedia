@@ -20,4 +20,9 @@
     </div>
 </div>
 
+<% if (@wiki.private && @wiki.user == current_user) || (@wiki.private && current_user.admin?) %>
+    <%= render partial: 'collaborators/form' %>
+<% end %>
+
+
 

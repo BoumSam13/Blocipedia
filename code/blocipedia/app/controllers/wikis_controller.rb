@@ -5,20 +5,6 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id]);
-    
-    role = current_user.role
-    case role
-      when "standard"
-        if @wiki.private
-          flash[:alert] = "You are not authorized to see this private wiki since you are signed up with a standard membership!"
-          redirect_to root_path
-        end
-      when "premium"
-        if @wiki.private && @wiki.user != current_user
-          flash[:alert] = "You are not authorized to see this private wiki since you did not create it!"
-          redirect_to root_path
-        end
-    end
   end
 
   def new
@@ -44,20 +30,6 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    
-    role = current_user.role
-    case role
-      when "standard"
-        if @wiki.private
-          flash[:alert] = "You are not authorized to edit this private wiki since you are signed up with a standard membership!"
-          redirect_to root_path
-        end
-      when "premium"
-        if @wiki.private && @wiki.user != current_user
-          flash[:alert] = "You are not authorized to edit this private wiki since you did not create it!"
-          redirect_to root_path
-        end
-    end
   end
   
   def update

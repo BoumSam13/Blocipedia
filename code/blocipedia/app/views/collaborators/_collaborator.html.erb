@@ -1,0 +1,11 @@
+<%= content_tag :tbody, class: 'media', id: "collaborator-#{collaborator.id}" do %>
+    <tr>
+        <td class="col-md-1"><center><%= link_to "", "/wikis/#{@wiki.id}/collaborators/#{collaborator.id}", method: :delete, class: 'glyphicon glyphicon-remove', remote: true %></center></td>
+        <td class="col-md-6"><%= collaborator.user.name %></td>
+    </tr>
+
+<% end %>
+
+
+
+
